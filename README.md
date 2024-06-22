@@ -18,13 +18,9 @@ O Servidor de Configuração centraliza o gerenciamento de configurações para 
 
 ## Configuração
 
-- **Servidor de Configuração:**
-  - Para detalhes das configurações, consulte os arquivos `application.properties` nos respectivos microsserviços.
+### Configurações no `config/`
 
-### Configurações em `config/`
-
-**user-service.yml:**
-```yaml
+#### Arquivo `user-service.yml`
 server:
   port: 8081
   wait-time-in-ms-when-sync-empty: 3000
@@ -37,9 +33,7 @@ spring:
 
 application-version: 1.0
 
-**user-service.yml:**
-```yaml
-
+#### Arquivo `vehicle-service.yml`
 server:
   port: 8082
   wait-time-in-ms-when-sync-empty: 3000
@@ -58,77 +52,68 @@ application-version: 1.1
 ## Instruções de Configuração
 Para configurar este projeto localmente, siga os passos abaixo:
 
-Clonar o Repositório:
-
+## Clonar o Repositório:
 git clone <repository_url>
 cd VehicleCatalog
 
 ## Compilar e Executar Cada Microsserviço:
 
 Serviço de Veículos:
-
 cd VehicleService
 mvn spring-boot:run
 
 Serviço de Usuários:
-
 cd UserService
 mvn spring-boot:run
 
 Serviço de Configuração:
-
 cd ConfigServer
 mvn spring-boot:run
 
-Acessar os Microsserviços:
+## Acessar os Microsserviços:
 
 Serviço de Veículos: http://localhost:8082/swagger-ui.html
 Serviço de Usuários: http://localhost:8081/swagger-ui.html (Atualmente não está funcional)
 Servidor de Configuração: http://localhost:8888
 
 ## Utilização das URLs no Postman
-
-Aqui estão as instruções para utilizar as URLs dos microsserviços `UserController` e `VehicleController` no Postman.
+## Aqui estão as instruções para utilizar as URLs dos microsserviços UserController e VehicleController no Postman.
 
 ## UserController
 
-### 1. Listar Todos os Usuários
+## Listar Todos os Usuários
+Método: GET
+URL: http://localhost:8081/api/users/list
+Descrição: Retorna todos os usuários cadastrados.
 
-- **Método:** GET
-- **URL:** `http://localhost:8081/api/users/list`
-- **Descrição:** Retorna todos os usuários cadastrados.
+## Login de Usuário
+Método: POST
+URL: http://localhost:8081/api/users/login
+Descrição: Autentica o usuário e retorna um token JWT.
+Body: JSON com os dados de login do usuário
+{
+  "username": "usuario",
+  "password": "senha"
+}
 
-### 2. Login de Usuário
-
-- **Método:** POST
-- **URL:** `http://localhost:8081/api/users/login`
-- **Body:** JSON com os dados de login do usuário:
-  ```json
-  {
-    "username": "usuario",
-    "password": "senha"
-  }
-
-Criar Novo Usuário
+## Criar Novo Usuário
 Método: POST
 URL: http://localhost:8081/api/users/create
-Body: JSON com os dados do novo usuário:
-
+Body: JSON com os dados do novo usuário
+Descrição: Cria um novo usuário.
 {
   "username": "novousuario",
   "password": "novasenha",
   "email": "novousuario@example.com"
 }
-Descrição: Cria um novo usuário.
 
 
-4. Deletar Usuário por Nome de Usuário
+## Deletar Usuário por Nome de Usuário
 Método: DELETE
 URL: http://localhost:8081/api/users/delete/{username}
 Descrição: Deleta um usuário pelo nome de usuário especificado na URL.
 
-
-5. Logout de Usuário
+## Logout de Usuário
 Método: POST
 URL: http://localhost:8081/api/users/logout
 Descrição: Desloga o usuário atualmente autenticado.
@@ -136,52 +121,52 @@ Descrição: Desloga o usuário atualmente autenticado.
 
 ## VehicleController
 
-1. Listar Todos os Veículos
+## Listar Todos os Veículos
 Método: GET
 URL: http://localhost:8082/api/vehicles
 Descrição: Retorna todos os veículos cadastrados.
 
-2. Obter Veículo por ID
+## Obter Veículo por ID
 Método: GET
 URL: http://localhost:8082/api/vehicles/{id}
 Descrição: Retorna o veículo com o ID especificado na URL.
 
-3. Criar Novo Veículo
+## Criar Novo Veículo
 Método: POST
 URL: http://localhost:8082/api/vehicles
-Body: JSON com os dados do novo veículo:
-
+Descrição: Cria um novo veículo.
+Body: JSON com os dados do novo veículo
 {
   "brand": "Marca",
   "model": "Modelo",
   "year": 2023
 }
 
-Atualizar Veículo por ID
+## Atualizar Veículo por ID
 Método: PUT
 URL: http://localhost:8082/api/vehicles/{id}
+Descrição: Atualiza os dados do veículo com o ID especificado na URL.
 Body: JSON com os novos dados do veículo:
-
 {
   "brand": "Nova Marca",
   "model": "Novo Modelo",
   "year": 2024
 }
-Descrição: Atualiza os dados do veículo com o ID especificado na URL.
 
-5. Deletar Veículo por ID
+## Deletar Veículo por ID
 Método: DELETE
 URL: http://localhost:8082/api/vehicles/{id}
 Descrição: Deleta o veículo com o ID especificado na URL.
 
-Para utilizar essas URLs no Postman:
+
+## Para utilizar essas URLs no Postman ##:
 
 Substitua {username} e {id} pelos valores reais ao fazer as requisições.
 Certifique-se de que os microsserviços UserService e VehicleService estão em execução nas portas 8081 e 8082, respectivamente.
 Configure o Postman de acordo com os métodos e URLs mencionados acima para testar os endpoints.
-Isso facilitará o teste e a interação com os microsserviços do seu projeto Vehicle Catalog. Boas requisições!
 
-Contribuições
+
+## Contribuições
 Contribuições são bem-vindas! Siga estes passos para contribuir:
 
 Fork o repositório.
@@ -191,8 +176,5 @@ Comite suas mudanças (git commit -am 'Adicionar nova feature').
 Faça o push para o branch (git push origin feature/nova-feature).
 Crie um novo Pull Request.
 
-Licença
-Este projeto está licenciado sob a Licença MIT
-
-Esse arquivo `README.md` contém todas as informações necessárias formatadas corretamente e em português. Você pode copiar e colar esse conteúdo diretamente no arquivo `README.md` do seu projeto.
-
+##### Licença
+Este projeto está licenciado sob a Licença MIT.
